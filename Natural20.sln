@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Natural20", "Natural20\Natural20.csproj", "{D27D496C-63C9-4FFB-9BFF-8D6E88038B17}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Natural20Tests", "Natural20Tests\Natural20Tests.csproj", "{5685074F-26AA-414C-B33F-AA8DA5EC1003}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D27D496C-63C9-4FFB-9BFF-8D6E88038B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D27D496C-63C9-4FFB-9BFF-8D6E88038B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D27D496C-63C9-4FFB-9BFF-8D6E88038B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D27D496C-63C9-4FFB-9BFF-8D6E88038B17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5685074F-26AA-414C-B33F-AA8DA5EC1003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5685074F-26AA-414C-B33F-AA8DA5EC1003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5685074F-26AA-414C-B33F-AA8DA5EC1003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5685074F-26AA-414C-B33F-AA8DA5EC1003}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
