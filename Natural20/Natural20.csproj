@@ -115,7 +115,6 @@
     <Compile Include="Dice.cs" />
     <Compile Include="DiceChain.cs" />
     <Compile Include="Core\DiceChainLink.cs" />
-    <None Include="LICENSE" />
     <Compile Include="SeveralDice.cs" />
     <Compile Include="DiceOperation.cs" />
     <Compile Include="Core\DiceOperationTools.cs" />
@@ -131,9 +130,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\RandomExtensions.cs" />
     <Compile Include="Rolls.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
