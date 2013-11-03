@@ -10,7 +10,7 @@ namespace Natural20Tests {
         private DiceChain c2d6p3;
         private DiceChain cd4d6mr2t5;
         private DiceChain c3d8ep3;
-        private DiceChain cd2d10edd2p10;
+        private DiceChain d2d10div2mul2;
         private double[] rolls;
 
         #region Create and roll a 2d6+3 manually
@@ -39,7 +39,7 @@ namespace Natural20Tests {
         #endregion
 
 
-        #region Create and roll a d4d6 - 1r[2-5] using fluent interface
+        #region Create and roll a d4d6 - [2-5] using fluent interface
 
         [Given("d4d6 and minus one interval 2-5")]
         public void D4D6MinusInterval2to5() {
@@ -100,12 +100,12 @@ namespace Natural20Tests {
 
         [Given("d2d10 divide by d2 mul 2")]
         public void D2D10DivideByD2MultiplyBy2() {
-            cd2d10edd2p10 = Dice.Take(Dice.D2).D(10).Divide(Dice.D2).Multiply(2);
+            d2d10div2mul2 = Dice.Take(Dice.D2).D(10).Divide(Dice.D2).Multiply(2);
         }
 
         [When("d2d10 divide by d2 mul 2 is rolled 100000 times")]
         public void D2D10DivideByD2MultiplyBy2IsRolled10000Times() {
-            rolls = cd2d10edd2p10.Roll(100000).ToArray();
+            rolls = d2d10div2mul2.Roll(100000).ToArray();
         }
 
         [Then("resulting amount for each roll should be between 1 and 40 inclusively")]
@@ -116,8 +116,8 @@ namespace Natural20Tests {
         [Then("d2d10 divide by d2 mul 2 distribution should be good")]
         public void D2D10DivideByD2MultiplyBy2DistributionShouldBeGood() {
             var statistics = new DescriptiveStatistics(rolls);
-            Assert.AreEqual(cd2d10edd2p10.Minimum, statistics.Minimum, "Expected min differs from actual min");
-            Assert.AreEqual(cd2d10edd2p10.Maximum, statistics.Maximum, "Expected max differs from actual max");
+            Assert.AreEqual(d2d10div2mul2.Minimum, statistics.Minimum, "Expected min differs from actual min");
+            Assert.AreEqual(d2d10div2mul2.Maximum, statistics.Maximum, "Expected max differs from actual max");
             Assert.AreEqual(12.25, statistics.Mean, 1, "Expected mean differs to much from actual mean");
             Assert.Greater(statistics.Skewness, 0.8, "Distribution is not skewed enough");
             Assert.Less(statistics.Kurtosis, 0, "Distribution is not platykurtic at all");

@@ -14,7 +14,7 @@ namespace Natural20 {
     /// </summary>
     public static class Dice {
         /// <summary> Gets or sets the random number generator used for dice rolls. It uses ThreadLocal under the hood,
-        /// so instances of Random in getter/setter differ between threads. </summary>
+        /// so instances in getter/setter differ between threads. </summary>
         public static Random Random { get { return threadRandom.Value; } set { threadRandom.Value = value; } }
 
         /// <summary>Gets or sets the convenient d2 (coin) reference. </summary>

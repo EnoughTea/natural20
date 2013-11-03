@@ -8,11 +8,44 @@ using Natural20;
 namespace Natural20Tests {
     [TestFixture]
     public class Demo {
+        [Test]
+        public void EntryLevel() {
+            // Roll a standard cubic die one time:
+            var d6 = new Die(6);
+            var roll = d6.Roll();
+
+            // Roll an interval die from 10 to 20 four times:
+            var interval10t20 = new Die(10, 20);
+            roll = interval10t20.Roll(4).Sum();
+
+            // There is also a fixed die, which always returns the same value. 
+            // It's useful when something expects IDie as value provider and you want to pass a constant value:
+            var fixed50 = new FixedDie(50);
+
+            // Roll two d10's:
+            var d2d10 =new SeveralDice(Dice.D10, 2);
+            roll = d2d10.Roll(); // Compared to simple Dice.D10.Roll(2), SeveralDice provides statistics and serialization
+            Console.WriteLine("Possible roll value range: " + d2d10.Minimum + " to " + d2d10.Maximum);
+
+            // Roll a d4d10 / d2 * 3:
+            var d4d10divD2mul3 = Dice.Take(Dice.D4).D(10).Divide(Dice.D2).Multiply(3);  // This is a dice chain.
+            // Math operations in dice chains are always executed from left to right, so this chain translates to:
+            // take a 1-4 of d10 dice and divide their roll value by 2 with 50 % chance, then multiply resulting roll value by 3.
+            roll = d4d10divD2mul3.Roll();
+            // Dice chains also provide statistics and serialization.
+
+            // This chain was created via fluent interface, but it is also possible to create such chain in a more explicit way:
+            d4d10divD2mul3 = new DiceChain(
+                new SeveralDice(new Die(10), new Die(4)))               // d4d10
+                .Append(DiceOperation.Divide, new SeveralDice(2))       // / 2
+                .Append(DiceOperation.Multiply, new SeveralDice(3));    // * 3
+
+            // Oh, and where is a random number generator? Built-in dice get it from thread-local `Dice.Random`.
+        }
+
         /// <summary> Roll 4d6 for each of the six ability scores. Drop the low die in each roll. </summary>
         [Test]
         public void RollAbilityScores() {
-            Dice.Random = new Random(1); // Just showing where built-in dice get their random generator.
-
             var scores = from ability in Enumerable.Range(0, 6)                 // For each of six ability scores
                          let dieRolls = new Die(6).Roll(4).ToList()             // roll d6 four times,
                          let lowDie = dieRolls.Min()                            // find a low die, and

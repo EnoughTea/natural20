@@ -8,7 +8,7 @@ Scenario: Create and roll a 2d6+3 manually
 	Then resulting amount for each roll should be between 5 and 15 inclusively
 	Then 2d6 plus 3 distribution should be good
 
-Scenario: Create and roll a d4d6 - 1r[2-5] using fluent interface
+Scenario: Create and roll a d4d6 - [2-5] using fluent interface
 	Given d4d6 and minus one interval 2-5
 	When d4d6 minus 1 interval 2-5 is rolled 100000 times
 	Then resulting amount for each roll should be between -4 and 22 inclusively
