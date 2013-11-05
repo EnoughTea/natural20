@@ -14,6 +14,10 @@ namespace Natural20 {
         /// <param name="secondIndex">Index of the second element.</param>
         public static void Swap<T>(this IList<T> list, int firstIndex, int secondIndex) {
             Contract.Requires(list != null);
+            Contract.Requires(firstIndex >= 0);
+            Contract.Requires(secondIndex >= 0);
+            Contract.Requires(firstIndex < list.Count);
+            Contract.Requires(secondIndex < list.Count);
 
             var tmp = list[firstIndex];
             list[firstIndex] = list[secondIndex];

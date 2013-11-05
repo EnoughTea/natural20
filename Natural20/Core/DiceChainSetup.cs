@@ -27,7 +27,7 @@ namespace Natural20.Core {
         /// <summary> Initializes a new instance of the <see cref="DiceChainSetup" /> struct. </summary>
         /// <param name="amountProvider">The amount of dice added to the created <see cref="DiceChain" />.</param>
         public DiceChainSetup(IDie amountProvider)
-            : this(amountProvider, DiceOperation.None, null) {
+            : this(amountProvider, DiceOperation.Plus, null) {
             Contract.Requires(amountProvider != null);
         }
 
@@ -37,6 +37,7 @@ namespace Natural20.Core {
         /// <param name="previousDice">The previous <see cref="DiceChain"/> to carry on to next one.</param>
         public DiceChainSetup(IDie amountProvider, DiceOperation previousOperation,
             DiceChain previousDice) {
+            Contract.Requires(previousOperation != DiceOperation.None);
             Contract.Requires(amountProvider != null);
 
             Amount = amountProvider;
@@ -76,6 +77,10 @@ namespace Natural20.Core {
 
             var result = PreviousDice;
             if (result != null) {
+                if (PreviousOperation == DiceOperation.None) {
+                    throw new InvalidOperationException("Can't append dice with unknown operation.");
+                }
+
                 result.Append(PreviousOperation, new SeveralDice(die, Amount));
             }
             else {

@@ -158,8 +158,8 @@ namespace Natural20.Core {
         private double Roll(out int rollCount) {
             var previousRoll = GetPreviousRoll();
             var nodeRoll = GetNodeRoll();
-            rollCount = nodeRoll.Item2;
-            return Rolls.PerformRollCombination(previousRoll.Item1, Operation, nodeRoll.Item1, previousRoll.Item2);
+            rollCount = nodeRoll.Count;
+            return Rolls.PerformRollCombination(previousRoll.Value, Operation, nodeRoll.Value, previousRoll.Count);
         }
 
         private double GetPreviousMin() {
@@ -188,18 +188,18 @@ namespace Natural20.Core {
 
         /// <summary> Get results of the previous chain rolls. </summary>
         /// <returns>(rollValue, rollCount)</returns>
-        private Tuple<double, int> GetPreviousRoll() {
+        private SeveralDiceRollResults GetPreviousRoll() {
             int rollCount = 1;
             double rollValue = (Previous != null) ? Previous.Roll(out rollCount) : 0;
-            return Tuple.Create(rollValue, rollCount);
+            return new SeveralDiceRollResults(rollValue, rollCount);
         }
 
         /// <summary> Get results of this node roll. </summary>
         /// <returns>(rollValue, rollCount)</returns>
-        private Tuple<double, int> GetNodeRoll() {
+        private SeveralDiceRollResults GetNodeRoll() {
             int rollCount = 1;
             double rollValue = (Node != null) ? Node.Roll(out rollCount) : 0;
-            return Tuple.Create(rollValue, rollCount);
+            return new SeveralDiceRollResults(rollValue, rollCount);
         }
 
 // ReSharper disable UnusedMember.Local
@@ -207,6 +207,19 @@ namespace Natural20.Core {
             Justification = "Called by data contract serializer via [KnownType] attribute.")]
         private static IEnumerable<Type> GetDieTypes() {
             return Dice.GetAllDieTypes();
+        }
+
+        private struct SeveralDiceRollResults {
+            /// <summary> Gets the sum of all performed rolls. </summary>
+            public double Value { get; private set; }
+            /// <summary> Gets the amount of rolls performed. </summary>
+            public int Count { get; private set; }
+
+            public SeveralDiceRollResults(double rollValue, int rollCount) 
+                : this() {
+                Value = rollValue;
+                Count = rollCount;
+            }
         }
     }
 }

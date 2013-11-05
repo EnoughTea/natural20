@@ -44,7 +44,7 @@ namespace Natural20 {
         /// every time you enumerate, so call something like '.ToArray()' when you want to keep previous values.
         /// </remarks>
         public IEnumerable<double> Roll(int count) {
-            Contract.Requires(count > 0);
+            Contract.Requires(count >= 0);
             Contract.Ensures(Contract.Result<IEnumerable<double>>() != null);
 
             yield break;

@@ -106,8 +106,8 @@ namespace Natural20 {
         /// </summary>
         /// <returns> Rolls total. </returns>
         public double Roll() {
-            int count = (RollCountProvider != null) ? (int)RollCountProvider.Roll() : 1;
-            return (RollValueProvider != null) ? RollValueProvider.Roll(count).Sum() : 0;
+            int count;
+            return Roll(out count);
         }
 
         /// <summary> Performs a specified amount of rolls and returns their values. </summary>
@@ -129,10 +129,9 @@ namespace Natural20 {
         public IEnumerable<double> RollSeparately() {
             Contract.Ensures(Contract.Result<IEnumerable<double>>() != null);
 
-            int count = (RollCountProvider != null) ? (int)RollCountProvider.Roll() : 1;
+            int count = GetDiceCount();
             for (int i = 0; i < count; i++) {
                 yield return RollValueProvider.Roll();
-
             }
         }
 
@@ -153,12 +152,18 @@ namespace Natural20 {
             string value = RollValueProvider.ToString();
             return count + value;
         }
-
+        
         internal double Roll(out int rollCount) {
             Contract.Ensures(!Double.IsNaN(Contract.Result<double>()));
 
-            rollCount = (RollCountProvider != null) ? (int)RollCountProvider.Roll() : 1;
+            rollCount = GetDiceCount();
             return RollValueProvider.Roll(rollCount).Sum();
+        }
+
+        private int GetDiceCount() {
+            Contract.Ensures(Contract.Result<int>() >= 0);
+            
+            return (RollCountProvider != null) ? Math.Max(0, (int)RollCountProvider.Roll()) : 1;
         }
 
 // ReSharper disable UnusedMember.Local

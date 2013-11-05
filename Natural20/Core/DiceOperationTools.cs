@@ -53,8 +53,13 @@ namespace Natural20.Core {
             Contract.Requires(!String.IsNullOrWhiteSpace(nodeRepr));
             Contract.Requires(opIndex >= 0);
             Contract.Requires(opIndex < nodeRepr.Length);
+            Contract.Ensures(Contract.Result<DiceOperation>() != DiceOperation.None);
 
             var diceOp = FromOpChar(nodeRepr[opIndex]);
+            if (diceOp == DiceOperation.None) {
+                throw new ArgumentException("Operation index was wrong or unknown operation character was at index.");
+            }
+
             if (opIndex > 0) {
                 string beforeOp = nodeRepr.Substring(0, opIndex).Trim();
                 if (beforeOp.EndsWith("(")) {

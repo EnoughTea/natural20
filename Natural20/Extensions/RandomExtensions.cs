@@ -62,7 +62,7 @@ namespace Natural20 {
         /// <param name="max">The exclusive upper bound of the random number returned.</param>
         public static int NextSeveral(this Random random, int count, int min, int max) {
             Contract.Requires(random != null);
-            Contract.Requires(count > 0);
+            Contract.Requires(count >= 0);
             Contract.Requires(min <= max);
 
             int total = 0;

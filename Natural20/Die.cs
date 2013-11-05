@@ -101,6 +101,8 @@ namespace Natural20 {
 
         protected override double MakeSingleRoll(Random random) {
             Contract.Ensures(!Double.IsInfinity(Contract.Result<double>()));
+            Contract.Ensures(!Double.IsNaN(Contract.Result<double>()));
+            
             int min = (int)Minimum; 
             int max = (int)Maximum;
             if (min > max) { throw new InvalidOperationException("Can't roll a custom die with Minimum > Maximum."); }

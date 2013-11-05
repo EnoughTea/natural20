@@ -3,6 +3,7 @@
 // Version 2, as published by Sam Hocevar. See the LICENSE file for more details.
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -136,8 +137,9 @@ namespace Natural20 {
             while (opIndex > -1) {
                 // Determine whether there is a next dice chain node or not:
                 int nextOpIndex = cleaned.IndexOfAny(diceOps, opIndex + 1);
-                string nodePart = (nextOpIndex > -1)    // If there is a nest dice chain node, extract text before it.
-                    ? cleaned.Substring(opIndex + 1, nextOpIndex - opIndex - 1)
+                int nextNodePartLength = nextOpIndex - opIndex - 1;
+                string nodePart = (nextNodePartLength > 0)    // If there is a next dice chain node, extract text before it.
+                    ? cleaned.Substring(opIndex + 1, nextNodePartLength)
                     : cleaned.Substring(opIndex + 1);   // Otherwise just get all remaining text.
                 nodePart = nodePart.Remove("(").Remove(")");
                 var node = ToNode(nodePart);
@@ -178,7 +180,6 @@ namespace Natural20 {
         /// <summary> Converts string representation of a single node in a dice chain to an actual node. </summary>
         private static SeveralDice ToNode(string nodeRepresentation) {
             SeveralDice result = null;
-
             foreach (var parser in nodeParsers) {    // Parsers should not throw, but let's enforce the rule.
                 try { result = parser(nodeRepresentation); }
                 catch { result = null; }
@@ -190,6 +191,8 @@ namespace Natural20 {
         }
 
         private static SeveralDice ParseBuiltinDice(string nodeRepresentation) {
+            Contract.Requires(!String.IsNullOrEmpty(nodeRepresentation));
+
             SeveralDice result = null;
             double fixedValue;
             // Try to match the simplest fixed die first:
@@ -211,6 +214,7 @@ namespace Natural20 {
         /// If there are 2 matches, first will be a die count provider and second will be a value provider. </summary>
         private static SeveralDice MatchToBuiltinDiceNode(MatchCollection dieMatches) {
             Contract.Requires(dieMatches != null);
+
             Die value = null;
             Die count = null;
             if (dieMatches.Count > 0) {
@@ -277,6 +281,6 @@ namespace Natural20 {
         private static readonly List<Func<string, SeveralDice>> nodeParsers =
             new List<Func<string, SeveralDice>> { ParseBuiltinDice };
 
-        private static readonly string[] knownNodePatterns = new[] { DieNodePattern, IntervalNodePattern };
+        private static readonly string[] knownNodePatterns = { DieNodePattern, IntervalNodePattern };
     }
 }
