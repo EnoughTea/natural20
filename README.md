@@ -2,10 +2,9 @@
 
 Natural20 is a D&D-inspired dice roller which aims to make random-based mechanics clearer for random-heavy projects like certain RPGs and roguelikes.
 
-Natural20 focuses mainly on separating complex dice rolls uinto several pieces.
+Natural20 focuses mainly on separating complex dice rolls into several pieces.
 There may be some level of 'enterprise overhead', so if your project does not need complex dice chains, chances are you would be better off using `Random.Next()`.
 
-This is a young library which was just extracted from a small game and cleaned up so others could benefit from it, hopefully.
 
 ## Highlights
 
